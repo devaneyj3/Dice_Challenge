@@ -41,30 +41,37 @@ rollButton.addEventListener('click', function()
     if(gamePlaying) {
          //get random number
         var dice = Math.floor(Math.random() * 6) + 1;
+        var dice1 = Math.floor(Math.random() * 6) + 1;
+
+        var addedDice = dice + dice1;
 
         //display the result
         dicePic0.style.display = "block";
         dicePic0.src = "dice-" + dice + ".png";
 
-        // dicePic1.style.display = "block";
-        // dicePic1.src = "dice-" + dice1+ ".png";
+        dicePic1.style.display = "block";
+        dicePic1.src = "dice-" + dice1+ ".png";
 
-        if(dice !== 1 && dice1 !== 1) {
-              //update current score
-              roundScore += dice;
-              //change player one score based on the dice rolled
-             if (dice == 6 && lastDice == 6) 
-             {
-              scores[activePlayer] = 0;
-              document.querySelector("#score-" + activePlayer).textContent = "0";
-              nextPlayer();
-             }
-             document.getElementById("current-" + activePlayer).textContent = roundScore;
+        if (dice == 6 && lastDice == 6 || dice1 == 6 && lastDice1 == 6) 
+        {
+            
+            scores[activePlayer] = 0;
+            document.querySelector("#score-" + activePlayer).textContent = "0";
+            console.log("Random dice: " + dice);
+            nextPlayer();
         }
-        else {
+        else if(dice !== 1 && dice1 !== 1) {
+              //update current score
+            roundScore += addedDice;
+            //change player one score based on the dice rolled
+            document.getElementById("current-" + activePlayer).textContent = roundScore;
+        }
+        else 
+        {
             nextPlayer();
         }
         lastDice = dice;
+        lastDice1 = dice1;
     }
    
 });
@@ -148,8 +155,8 @@ function init() {
     currentScore0.textContent = "0";
     currentScore1.textContent = "0";
 
-    document.getElementById("name-0").textContent = "Player One";
-    document.getElementById("name-1").textContent = "Player Two";
+    document.getElementById("name-0").textContent = "Player 1";
+    document.getElementById("name-1").textContent = "Player 2";
     player0Panel.classList.remove("winner");
     player1Panel.classList.remove("winner");
     player0Panel.classList.remove("active");
